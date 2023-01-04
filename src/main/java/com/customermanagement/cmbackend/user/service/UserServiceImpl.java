@@ -37,13 +37,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO addUser(UserDTO userDTO) throws Exception {
 
-        if (userRepository.findByUsernameOrEmail( userDTO.getName() + userDTO.getLastname(), userDTO.getEmail()).isPresent()) {
+        // Como no se tiene un sistema de registro y el email por simplicidad no se puede modificar, entonoces esto siempre va ser único.
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new DuplicateUserException("Este usuario ya se encuentra en el sistema.", new RuntimeException());
         }
 
-        Role roleCustomer = getDefaultRole(); // Role por defecto ROLE_CUSTOMER
+        // Como no se tiene un sistema de registro, por defecto el role es ROLE_CUSTOMER.
+        // Un administrador solo se tiene por BD de momento.
+        Role roleCustomer = getDefaultRole();
+
         if (roleCustomer == null) {
-            throw new RuntimeException("No se encotró el rol."); // fallo del sistema.
+            // Si ocurre esto es un fallo de que no se inserto el role predeterminado.
+            throw new RuntimeException("No se encotró el rol.");
         }
 
         User newUser = insertUser(userDTO);
@@ -87,8 +92,11 @@ public class UserServiceImpl implements UserService{
             throw new UserNotFoundException("Usuario no encontrado.", new ResourceNotFoundException());
         }
 
+        // Por simplicidad solo permito modificar estos datos.
         user.setName(userInfoDTO.getName());
         user.setLastname(userInfoDTO.getLastname());
+        user.setDocument(userInfoDTO.getDocument());
+        user.setPhone(userInfoDTO.getPhone());
 
         userRepository.save(user);
 
@@ -104,18 +112,19 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
     }
 
-    @Override
-    public UserDTO getInfo(String usernameOrEmail) {
-        User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail).orElse(null);
-        return CreateUserDTO(user);
-    }
 
     private User insertUser(UserDTO userDTO) {
         User newUser = new User();
         newUser.setName(userDTO.getName());
         newUser.setLastname(userDTO.getLastname());
         newUser.setEmail(userDTO.getEmail());
-        newUser.setUsername(userDTO.getName() + userDTO.getLastname()); // por defecto
+        newUser.setDocument(userDTO.getDocument());
+        newUser.setPhone(userDTO.getPhone());
+
+        // Como no se cuenta con un sistema de registro, le genero un username por defecto, este no se puede editar.
+        newUser.setUsername("user" + userDTO.getDocument());
+
+        // Como no se cuenta con un sistema de registro, le genero una contraseña temporal.
         newUser.setPassword(GenerateTemporaryPassword());
 
         return userRepository.save(newUser);
@@ -134,11 +143,12 @@ public class UserServiceImpl implements UserService{
 
     private String GenerateTemporaryPassword() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // La contrasña temporal es passtemp y pongo aquí solo por practicidad.
         return passwordEncoder.encode("passtemp");
     }
 
     private UserDTO CreateUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getLastname(), user.getEmail());
+        return new UserDTO(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getDocument(), user.getPhone());
     }
 }
 

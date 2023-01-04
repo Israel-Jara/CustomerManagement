@@ -5,5 +5,6 @@ public enum ErrorCode {
     USER_ALREADY_EXISTS,
     USER_NOT_FOUND,
     NOT_FOUND_PARAMETER,
+    ACCESS_DENIED,
     INTERNAL_ERROR
 }

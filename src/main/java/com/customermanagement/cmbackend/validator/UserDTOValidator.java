@@ -20,6 +20,7 @@ public class UserDTOValidator implements Validator {
         validationArguments(errors, "name", userDTO.getName(), "El nombre no puede estar vacío.");
         validationArguments(errors, "lastname", userDTO.getLastname(), "El apellido no puede estar vacío.");
         validationArguments(errors, "email", userDTO.getEmail(), "El email no puede estar vacío.");
+        validationArguments(errors, "document", userDTO.getDocument(), "El documento no puede estar vacío.");
     }
 
     private void validationArguments(Errors errors,String field, String argument, String message) {

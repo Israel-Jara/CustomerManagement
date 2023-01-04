@@ -7,6 +7,7 @@ import com.customermanagement.cmbackend.utils.error.ErrorCode;
 import com.customermanagement.cmbackend.utils.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -14,6 +15,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice(assignableTypes = {UserController.class})
 public class UserControllerAdvisor extends ResponseEntityExceptionHandler {
 
+
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleDuplicateUserException(AccessDeniedException accessDeniedException) {
+        logger.error(accessDeniedException.getMessage(), accessDeniedException);
+        return new ResponseEntity<>(new ErrorResponse("Acceso denegado.", ErrorCode.ACCESS_DENIED), HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(DuplicateUserException.class)
     public ResponseEntity<Object> handleDuplicateUserException(DuplicateUserException duplicateUserException) {

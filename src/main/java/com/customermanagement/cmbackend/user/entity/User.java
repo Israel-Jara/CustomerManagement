@@ -27,6 +27,10 @@ public class User implements Serializable {
 
     private String email;
 
+    private String document;
+
+    private String phone;
+
     private String username;
 
     private String password;
@@ -35,12 +39,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<UsersRoles> usersRoles;
 
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private List<Role> usersRoles;*/
 
     @CreationTimestamp
     private Date createdDate;

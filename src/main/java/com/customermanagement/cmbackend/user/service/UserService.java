@@ -19,6 +19,4 @@ public interface UserService {
 
     void deleteUser(Integer userId) throws Exception;
 
-    UserDTO getInfo(String usernameOrEmail);
-
 }

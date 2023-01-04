@@ -9,6 +9,7 @@ import com.customermanagement.cmbackend.validator.UserDTOValidator;
 import com.customermanagement.cmbackend.validator.UserInfoDTOValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -50,8 +51,8 @@ public class UserController {
     @GetMapping(value = {"/{userId}"})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> getUser(@PathVariable Integer userId) throws Exception {
-        UserDTO userDTO = userService.getUser(userId);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            UserDTO userDTO = userService.getUser(userId);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @GetMapping("/all")

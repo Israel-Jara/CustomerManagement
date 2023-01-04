@@ -19,6 +19,7 @@ public class UserInfoDTOValidator implements Validator {
         UserInfoDTO userInfoDTO = (UserInfoDTO) target;
         validationArguments(errors, "name", userInfoDTO.getName(), "El nombre no puede estar vacío.");
         validationArguments(errors, "lastname", userInfoDTO.getLastname(), "El apellido no puede estar vacío.");
+        validationArguments(errors, "document", userInfoDTO.getDocument(), "El documento no puede estar vacío.");
     }
 
     private void validationArguments(Errors errors,String field, String argument, String message) {
