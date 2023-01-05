@@ -3,6 +3,7 @@ package com.customermanagement.cmbackend.user.service;
 import com.customermanagement.cmbackend.role.entity.Role;
 import com.customermanagement.cmbackend.user.dto.UserInfoDTO;
 import com.customermanagement.cmbackend.user.entity.User;
+import com.customermanagement.cmbackend.user.exception.customUserError.DeleteUserException;
 import com.customermanagement.cmbackend.user.exception.customUserError.DuplicateUserException;
 import com.customermanagement.cmbackend.user.exception.customUserError.UserNotFoundException;
 import com.customermanagement.cmbackend.userRole.entity.UsersRoles;
@@ -11,6 +12,7 @@ import com.customermanagement.cmbackend.user.repository.UserRepository;
 import com.customermanagement.cmbackend.userRole.exception.customuserroleerror.DuplicateUserRoleException;
 import com.customermanagement.cmbackend.userRole.repository.UserRoleRepository;
 import com.customermanagement.cmbackend.user.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService{
     private final UserRoleRepository userRoleRepository;
     private final RoleRepository roleRepository;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
@@ -108,6 +112,16 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             throw new UserNotFoundException("Usuario no encontrado.", new ResourceNotFoundException());
+        }
+
+        List<UsersRoles> usersRoles = user.getUsersRoles();
+        Optional<UsersRoles> userAdmin = usersRoles.stream().
+                filter(ur -> ur.getRole().getRole().equals("ROLE_ADMIN")).
+                findFirst();
+
+        // No se permite eliminar usuarios con ROLE_ADMIN.
+        if (userAdmin.isPresent()) {
+            throw new DeleteUserException("No se puede eliminar este usuario", new RuntimeException());
         }
         userRepository.delete(user);
     }

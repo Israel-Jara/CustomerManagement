@@ -1,6 +1,7 @@
 package com.customermanagement.cmbackend.user.exception;
 
 import com.customermanagement.cmbackend.user.controller.UserController;
+import com.customermanagement.cmbackend.user.exception.customUserError.DeleteUserException;
 import com.customermanagement.cmbackend.user.exception.customUserError.DuplicateUserException;
 import com.customermanagement.cmbackend.user.exception.customUserError.UserNotFoundException;
 import com.customermanagement.cmbackend.utils.error.ErrorCode;
@@ -21,6 +22,12 @@ public class UserControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDuplicateUserException(AccessDeniedException accessDeniedException) {
         logger.error(accessDeniedException.getMessage(), accessDeniedException);
         return new ResponseEntity<>(new ErrorResponse("Acceso denegado.", ErrorCode.ACCESS_DENIED), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(DeleteUserException.class)
+    public ResponseEntity<Object> handleDuplicateUserException(DeleteUserException deleteUserException) {
+        logger.error(deleteUserException.getMessage(), deleteUserException);
+        return new ResponseEntity<>(new ErrorResponse(deleteUserException.getMessage(), ErrorCode.DELETE_EXCEPTION), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateUserException.class)

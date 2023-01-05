@@ -6,5 +6,6 @@ public enum ErrorCode {
     USER_NOT_FOUND,
     NOT_FOUND_PARAMETER,
     ACCESS_DENIED,
+    DELETE_EXCEPTION,
     INTERNAL_ERROR
 }

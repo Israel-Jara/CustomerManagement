@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS customermanagement;
+CREATE DATABASE customermanagement;
 USE customermanagement;
 
 CREATE TABLE IF NOT EXISTS roles(
@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS users_roles (
     CONSTRAINT role_user_fk FOREIGN KEY (role_id) REFERENCES roles(id)
     );
 
-insert ignore into users (name, lastname, email, document, username, password) value ( 'Israel', 'Jara', 'israeljara@correo.com', '777777', 'user777777', '$2a$12$6Wwi5vMyEaGmRHWafQTc.OTsLvtHSB2SlBSmwsNg4nh8EmCpd2z/6
-');
+insert ignore into users (name, lastname, email, document, username, password)value( 'Israel', 'Jara', 'israeljara@correo.com', '777777', 'user777777', '$2a$12$6Wwi5vMyEaGmRHWafQTc.OTsLvtHSB2SlBSmwsNg4nh8EmCpd2z/6');
 
 -- pasword = pass
 

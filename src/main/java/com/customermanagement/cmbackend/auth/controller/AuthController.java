@@ -15,35 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-
-    /*private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-
-    private final RoleRepository roleRepository;
-
-    private final PasswordEncoder passwordEncoder;
-
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }*/
-
-   /* @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto){
-        try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
-        }catch (Exception exception) {
-            return new ResponseEntity<>("User signed-in failed!.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }*/
-
-
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
@@ -53,7 +24,6 @@ public class AuthController {
     @PostMapping(value = {"/login"})
     public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDTO loginDto){
         String token = authService.login(loginDto);
-
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
         jwtAuthResponse.setAccessToken(token);
         return ResponseEntity.ok(jwtAuthResponse);

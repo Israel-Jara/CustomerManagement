@@ -93,9 +93,6 @@ public class UserController {
         ErrorResponse errorResponse = new ErrorResponse(messageError, ErrorCode.ILLEGAL_ARGUMENT);
         errorResponse.setCount(result.getErrorCount());
         errorResponse.setErrors(errors);
-        /*errors.forEach((error) -> {
-            logger.error("Error on userSectionInfoDTOValidator: " + error);
-        });*/
         return errorResponse;
     }
 
