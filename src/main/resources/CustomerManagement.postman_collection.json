@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "f11152f9-9ac6-4632-a328-df404dd65bd5",
+		"name": "CustomerManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6141709"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usernameOrEmail\" : \"israeljara@correo.com\",\r\n    \"password\" : \"pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNzc3Nzc3IiwiaWF0IjoxNjcyODU3Njk0LCJleHAiOjE2NzM0NjI0OTR9.2E_7Ze795mLD33v496JJCLeVO5p6eyT31vxVlcprFkLhCFw_JK7P-MXkOikhY3QM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Carlos\",\r\n    \"lastname\": \"Jara\",\r\n    \"email\":\"carlos@correo.com\",\r\n    \"document\": 666666\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/add-user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"add-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNzc3Nzc3IiwiaWF0IjoxNjcyOTAwODg0LCJleHAiOjE2NzM1MDU2ODR9.q3r4TgkKpwk9bZklspN6QA1eoNR01w293C3q_VApz_65W0HAYRpmfxhyJcY-r2SZ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNzc3Nzc3IiwiaWF0IjoxNjcyODU3Njk0LCJleHAiOjE2NzM0NjI0OTR9.2E_7Ze795mLD33v496JJCLeVO5p6eyT31vxVlcprFkLhCFw_JK7P-MXkOikhY3QM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNzc3Nzc3IiwiaWF0IjoxNjcyODU3Njk0LCJleHAiOjE2NzM0NjI0OTR9.2E_7Ze795mLD33v496JJCLeVO5p6eyT31vxVlcprFkLhCFw_JK7P-MXkOikhY3QM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Carlos\",\r\n    \"lastname\": \"García\",\r\n    \"email\":\"carlos@correo.com\",\r\n    \"document\":\"666666\",\r\n    \"phone\": \"323323\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNzc3Nzc3IiwiaWF0IjoxNjcyOTAxMDczLCJleHAiOjE2NzM1MDU4NzN9.cUX_NLAzm5iqPsiuKBsiquJAX1XGSsptWf2vrKRYdHZX4JIdeT0Jc7d2Lwmc4coy",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API-docs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v2/api-docs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v2",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
