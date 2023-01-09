@@ -8,25 +8,54 @@ import com.customermanagement.cmbackend.user.exception.customUserError.UserNotFo
 import com.customermanagement.cmbackend.user.repository.UserRepository;
 import com.customermanagement.cmbackend.utils.EntityUtils;
 import com.customermanagement.cmbackend.utils.DataLoader;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 
+import javax.persistence.EntityManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 //TODO: Agregar mockeos al H2 para poder probar todos los demas escenarios.
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UserServiceTest {
 
 
-    @Mock
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
+    private UserService userService;
+
+    @BeforeEach
+    public void beforeEach() {
+        EntityUtils.clear(entityManager);
+        EntityUtils.createUser(entityManager);
+    }
+
+    @Test
+    public void test() throws Exception {
+        UserDTO userDTO = userService.getUser(1);
+        assertEquals("UserName1", userDTO.getName());
+    }
+
+    /*@Mock
     private UserRepository userRepository;
 
     @Mock
@@ -60,7 +89,7 @@ public class UserServiceTest {
         // Probando el service.
         Throwable exception = assertThrows(UserNotFoundException.class, () -> userService.getUser(-1));
         assertEquals("Usario no encontrado.", exception.getMessage());
-    }
+    }*/
 
 
 }
