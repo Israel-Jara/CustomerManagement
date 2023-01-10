@@ -19,9 +19,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Date;
+import java.util.Optional;
 
-//TODO: Agregar mockeos al H2 para poder probar todos los demas escenarios.
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -35,6 +38,31 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserServiceImpl userService;
+
+    @Test
+    public void should_return_user_by_id() throws Exception {
+
+        final Integer id = 1;
+
+        User user = new User();
+        user.setId(1);
+        user.setName("UserName1");
+        user.setLastname("UserLastName1");
+        user.setEmail("user@correo.com");
+        user.setDocument("111111");
+        user.setUsername("username1");
+        user.setPassword("passuser1");
+
+        given(userRepository.findById(id)).willReturn(Optional.of(user));
+
+        UserDTO userDTOexpected = userService.getUser(id);
+
+        assertNotNull(userDTOexpected);
+        assertEquals(user.getName(), userDTOexpected.getName());
+        assertEquals(user.getLastname(), userDTOexpected.getLastname());
+        assertEquals(user.getEmail(), userDTOexpected.getEmail());
+        assertEquals(user.getDocument(), userDTOexpected.getDocument());
+    }
 
 
     @Test
